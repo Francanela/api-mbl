@@ -3,18 +3,19 @@ import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 
-@Controller('api/address')
+@Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Post()
-  create(@Body() createAddressDto: CreateAddressDto) {
+  @Post(':userId')
+  create(@Param('userId') userId: number, @Body() createAddressDto: CreateAddressDto) {
+    createAddressDto.user_id = Number(userId);
     return this.addressService.create(createAddressDto);
   }
 
   @Get('find/:id')
   findByUserId(@Param('id') id: number) {
-    return this.addressService.findByUserId(+id);
+     return this.addressService.findByUserId(+id);
   }
 
   @Patch(':id')

@@ -7,7 +7,7 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 export class AddressService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createAddressDto: CreateAddressDto) {
+  async create(createAddressDto: CreateAddressDto) {      
     return this.prisma.address.create({data: createAddressDto});
   }
 

@@ -3,8 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAddressDto {
 
-    @ApiProperty()
-    @IsNumber()
     user_id: number;
 
     @ApiProperty()
