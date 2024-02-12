@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { PrismaService } from 'src/database/PrismaService';
+import { UpdateAddressDto } from './dto/update-address.dto';
 
 @Injectable()
 export class AddressService {
@@ -14,8 +15,8 @@ export class AddressService {
     return this.prisma.address.findMany({where: {user_id: id, deleted_at: null}});
   }
 
-  async update(id: number, newDate: Date) {
-    return this.prisma.address.update({where: {id}, data: {deleted_at: newDate}});
+  async update(id: number, updateAddressDto: UpdateAddressDto) {
+    return this.prisma.address.update({where: {id}, data: updateAddressDto});
   }
 
   async remove(id: number) {

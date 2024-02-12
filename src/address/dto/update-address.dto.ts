@@ -1,11 +1,10 @@
 import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateAddressDto {
+export class UpdateAddressDto {
 
     @ApiProperty()
-    @IsNumber()
-    user_id: number;
+    id: number;
 
     @ApiProperty()
     @IsString()
@@ -27,11 +26,13 @@ export class CreateAddressDto {
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     @Length(2, 100)
     neighborhood: string;
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     @Length(2, 100)
     city: string;
 
@@ -43,11 +44,13 @@ export class CreateAddressDto {
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     @Length(2, 100)
     country: string;
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     @Length(8, 8)
     zipCode: string;
 
@@ -58,5 +61,6 @@ export class CreateAddressDto {
     landmark: string;
 
     @ApiProperty()
+    @IsOptional()
     main_address: boolean;
 }
