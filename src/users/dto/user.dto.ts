@@ -23,6 +23,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsString()
+  @IsOptional()
   @Length(8, 12)
   password: string; // Assuma que o hash de senha está implementado em outro lugar
 
