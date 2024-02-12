@@ -3,7 +3,6 @@ import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601, IsNumber } f
 
 export class CreatePaymentCardDto {
     
-    @IsNumber()
     user_id: number
 
     @IsString()
