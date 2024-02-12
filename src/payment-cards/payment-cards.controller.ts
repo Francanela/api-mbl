@@ -4,7 +4,7 @@ import { CreatePaymentCardDto } from './dto/create-payment-card.dto';
 import { UpdatePaymentCardDto } from './dto/update-payment-card.dto';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Payment Card Data')
+@ApiTags('payment_cards')
 @Controller('user/:userId/payment-cards')
 @ApiParam({ name: 'userId', description: 'User ID' }) // Adicione esta anotação para informar ao Swagger sobre o parâmetro de rota
 export class PaymentCardsController {
