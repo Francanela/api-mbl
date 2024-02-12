@@ -15,7 +15,7 @@ model User {
   cpf            String?  @unique
   dataNascimento DateTime
   created_at     DateTime @default(now())
-  updated_at     DateTime
+  updated_at     DateTime @updatedAt @default(now())
   password       String?
   Phone          Phone[]
 
@@ -27,7 +27,7 @@ model Application {
   nome       String
   token      String
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
 
   @@map("application")
 }
@@ -39,8 +39,8 @@ model Phone {
   phone_number String
   main_phone   Boolean
   created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-  deleted_at   DateTime @updatedAt
+  updated_at   DateTime @updatedAt @default(now())
+  deleted_at   DateTime?
 
   @@map("phones")
 }
