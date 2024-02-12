@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()
-      .setTitle('Your API Title')
+      .setTitle('MBL users data')
       .setDescription('API description')
       .setVersion('1.0')
       .addTag('API')
