@@ -18,7 +18,7 @@ export class PaymentCardsController {
   
   @Get()
   findAll(@Param('userId') userId: number) {
-    return this.paymentCardsService.findUserCards(userId);
+    return this.paymentCardsService.findUserCards(+userId);
   }
 
   @Get(':id')
