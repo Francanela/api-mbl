@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { PhonesModule } from './phones/phones.module';
+import { AddressModule } from './address/address.module';
 import { PaymentCardsModule } from './payment-cards/payment-cards.module';
 import { AddressModule } from './address/address.module';
 
@@ -12,4 +13,5 @@ import { AddressModule } from './address/address.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}
