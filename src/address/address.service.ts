@@ -13,14 +13,14 @@ export class AddressService {
   }
 
   findByUserId(id: string) {
-    return this.prisma.address.findMany({ where:{ user_id: id} }  );
+    return this.prisma.address.findMany({ where:{ user_id: id, deleted_at: null} }  );
   }
 
   update(id: string, updateAddressDto: UpdateAddressDto) {
     return this.prisma.address.update({data: updateAddressDto, where: {id: id}});
   }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} address`;
-  // }
+  remove(id: string) {
+    return this.prisma.address.update({data: {deleted_at: new Date()}, where: {id: id}});
+  }
 }

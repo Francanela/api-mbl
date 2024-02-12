@@ -21,8 +21,9 @@ export class AddressController {
   update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
     return this.addressService.update(id, updateAddressDto);
   }
+  
   @Delete(':id')
-  delete(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressService.update(id, updateAddressDto);
+  delete(@Param('id') id: string) {
+    return this.addressService.remove(id);
   }
 }
