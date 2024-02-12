@@ -12,12 +12,21 @@ export class PaymentCardsService {
       return this.prisma.paymentCard.create({data: createPaymentCardDto});
     }
 
-    findAll() {
-      return `This action returns all paymentCards`;
+    findCard(id: number) {
+      return this.prisma.phone.findMany({
+        where:{
+          id: id,
+        }
+      })    
     }
 
-    findByUser(userId: number) {
-      return `This action returns a #${userId} paymentCard`;
+    findUserCards(userId: number) {
+      return this.prisma.paymentCard.findMany({
+        where:{
+          user_id: userId,
+          deleted_at: null
+        }
+      })    
     }
 
     update(id: number, updatePaymentCardDto: UpdatePaymentCardDto) {

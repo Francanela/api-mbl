@@ -17,12 +17,12 @@ export class PaymentCardsController {
   
   @Get()
   findAll(@Param('userId') userId: number) {
-    return this.paymentCardsService.findAll();
+    return this.paymentCardsService.findUserCards(userId);
   }
 
   @Get(':id')
   findOne(@Param('id') userId: number) {
-    return this.paymentCardsService.findByUser(+userId);
+    return this.paymentCardsService.findCard(+userId);
   }
 
   @Patch(':id')
