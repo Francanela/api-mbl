@@ -5,10 +5,18 @@ import { PrismaService } from 'src/database/PrismaService';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import * as crypto from "crypto";
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LogService } from 'src/log/log.service';
+import { LogConsts } from 'src/commons/const-object.commons';
+import { CreateLogDto } from 'src/log/dto/create-log.dto';
 
 @Injectable()
 export class UsersService {
-    constructor(private configService: ConfigService, private prisma: PrismaService) { }
+    constructor(
+        private configService: ConfigService,
+        private prisma: PrismaService,
+        private readonly logService: LogService,
+        private readonly logConst: LogConsts
+    ) { }
 
     private getConfig() {
         return {
@@ -44,12 +52,24 @@ export class UsersService {
     }
 
     async create(data: CreateUserDto): Promise<User> {
-        return this.prisma.user.create({
+        const createdUser = this.prisma.user.create({
             data: {
                 ...data,
                 ...{ password: this.generatePasswordHash(data.password) }
             }
-        });
+        })
+
+        this.logService.log(
+            new CreateLogDto(
+                1,
+                this.logConst.createOperation,
+                this.logConst.userEntity,
+                (await createdUser).id.toString()
+            )
+        )
+
+
+        return createdUser;
     }
 
     async update(id: number, data: UpdateUserDto): Promise<User> {
@@ -57,6 +77,18 @@ export class UsersService {
         if (model.password !== undefined) {
             Object.assign(model, { password: this.generatePasswordHash(model.password) })
         }
+
+        const originalUser = (await this.findOne(id))
+
+        this.logService.log(
+            new CreateLogDto(
+                1,
+                this.logConst.updateOperation,
+                this.logConst.userEntity,
+                JSON.stringify(originalUser)
+            )
+        )
+
         return this.prisma.user.update({
             where: { id: id },
             data: data,
@@ -64,7 +96,7 @@ export class UsersService {
     }
 
     async checkLogin(email: string, password: string) {
-        let model =  await this.prisma.user.findUnique({
+        let model = await this.prisma.user.findUnique({
             where: { email }
         });
         //if (!model) return false;
