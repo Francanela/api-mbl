@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   name           String
   lastName       String
-  email          String?  @unique
-  cpf            String?  @unique
+  email          String?       @unique
+  cpf            String?       @unique
   dataNascimento DateTime
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt @default(now())
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @default(now()) @updatedAt
   password       String?
   Phone          Phone[]
   PaymentCards   PaymentCard[]
@@ -25,7 +25,7 @@ model User {
 }
 
 model Address {
-  id                 Int    @id @default(autoincrement())
+  id                 Int       @id @default(autoincrement())
   user_id            Int
   user               User      @relation(fields: [user_id], references: [id])
   street_address     String?
@@ -41,65 +41,45 @@ model Address {
   created_at         DateTime  @default(now())
   updated_at         DateTime  @default(now()) @updatedAt
   deleted_at         DateTime?
+
   @@map("address")
 }
 
 model Application {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   nome       String
   token      String
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 
   @@map("application")
 }
 
 model Phone {
-  id           Int      @id @default(autoincrement())
-  user         User     @relation(fields: [user_id], references: [id])
+  id           Int       @id @default(autoincrement())
+  user         User      @relation(fields: [user_id], references: [id])
   user_id      Int
   phone_number String
   main_phone   Boolean
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now()) @updatedAt
   deleted_at   DateTime?
 
   @@map("phones")
 }
 
-
-model Address {
-  id                 String    @id @default(uuid())
-  street_address     String
-  number             String
-  additional_details String?
-  neighborhood       String
-  city               String
-  state              String
-  country            String
-  zipCode            String
-  landmark           String?
-  main_address       Boolean   @default(false)
-  user_id            String
+model PaymentCard {
+  id                 Int       @id @default(autoincrement())
   user               User      @relation(fields: [user_id], references: [id])
+  user_id            Int
+  plataform_name     String
+  plataform_id       String
+  card_number_prefix String
+  card_number_sufix  String
+  card_brand         String
   created_at         DateTime  @default(now())
   updated_at         DateTime  @default(now()) @updatedAt
   deleted_at         DateTime?
-  @@map("address")
-}
-
-model PaymentCard {
-  id                    Int      @id @default(autoincrement())
-  user                  User     @relation(fields: [user_id], references: [id])
-  user_id               Int
-  plataform_name        String
-  plataform_id          String
-  card_number_prefix    String
-  card_number_sufix     String
-  card_brand            String
-  created_at            DateTime @default(now())
-  updated_at            DateTime @updatedAt @default(now())
-  deleted_at            DateTime?
 
   @@map("payment_cards")
 }
