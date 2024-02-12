@@ -14,8 +14,7 @@ export class CreateUserDto {
   lastName: string;
 
   @ApiProperty()
-  @IsEmail()
-  @Length(11, 50)
+  @Length(11, 14)
   cpf: string
 
   @ApiProperty()
@@ -24,11 +23,11 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsString()
+  @IsOptional()
   @Length(8, 50)
   password: string; // Assuma que o hash de senha está implementado em outro lugar
 
   @ApiProperty()
   @IsISO8601({strict: true})
-  @MinDate(new Date(1900, 1, 1)) // Ajuste a data mínima conforme necessário
   dataNascimento: Date;
 }
