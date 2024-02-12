@@ -1,32 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('address')
-@Controller('address')
+@Controller('user/:userId/address/')
+@ApiParam({ name: 'userId', description: 'User Id' })
 export class AddressController {
-  constructor(private readonly addressService: AddressService) {}
+  constructor(private readonly addressService: AddressService) { }
 
-  @Post(':userId')
-  create(@Param('userId') userId: number, @Body() createAddressDto: CreateAddressDto) {
+  @Post()
+  create(
+    @Param('userId') userId: number,
+    @Body() createAddressDto: CreateAddressDto
+  ) {
     createAddressDto.user_id = Number(userId);
     return this.addressService.create(createAddressDto);
   }
 
-  @Get(':userId/find')
+  @Get()
   findByUserId(@Param('userId') userId: number) {
-     return this.addressService.findByUserId(+userId);
+    return this.addressService.findByUserId(Number(userId));
   }
 
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressService.update(+id, updateAddressDto);
+  @Get(':addressId')
+  findOneUserAddress(
+    @Param('userId') userId: number,
+    @Param('addressId') addressId: number
+  ) {
+    return this.addressService.findOneUserAddress(Number(userId), Number(addressId));
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.addressService.remove(+id);
+  @Put(':addressId')
+  update(
+    @Param('userId') userId: number,
+    @Param('addressId') addressId: number,
+    @Body() updateAddressDto: UpdateAddressDto
+  ) {
+    return this.addressService.update(
+      Number(userId),
+      Number(addressId),
+      updateAddressDto
+    );
+  }
+
+  @Delete(':addressId')
+  remove(
+    @Param('userId') userId: number,
+    @Param('addressId') addressId: number
+  ) {
+    return this.addressService.delete(Number(userId), Number(addressId));
   }
 }
