@@ -11,7 +11,7 @@ export class UsersService {
 
     async create(data: CreateUserDto): Promise<User> {
         console.log(data);
-        return this.prisma.user.create({ data: data});
+        return this.prisma.user.create({data: data});
     }
 
     async findAll() {
