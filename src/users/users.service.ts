@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/database/PrismaService';
-import { CreateUserDto } from 'src/users/dto/user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import * as crypto from "crypto";
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -51,7 +52,7 @@ export class UsersService {
         });
     }
 
-    async update(id: number, data: CreateUserDto): Promise<User> {
+    async update(id: number, data: UpdateUserDto): Promise<User> {
         let model = data
         if (model.password !== undefined) {
             Object.assign(model, { password: this.generatePasswordHash(model.password) })
