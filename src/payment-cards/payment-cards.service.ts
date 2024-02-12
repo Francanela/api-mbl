@@ -8,23 +8,38 @@ import { PrismaService } from 'src/database/PrismaService';
 export class PaymentCardsService {
     constructor(private prisma: PrismaService) {}
     
-    async create(createPaymentCardDto: CreatePaymentCardDto): Promise<PaymentCard> {
-      return this.prisma.paymentCard.create({data: createPaymentCardDto});
+    async create(createPaymentCardDto: CreatePaymentCardDto): Promise<any> {
+      // return this.prisma.paymentCard.create({data: createPaymentCardDto});
     }
 
-    findAll() {
-      return `This action returns all paymentCards`;
+    findCard(id: number) {
+      return this.prisma.paymentCard.findUnique({
+        where:{
+          id: id,
+        }
+      })    
     }
 
-    findByUser(userId: number) {
-      return `This action returns a #${userId} paymentCard`;
+    findUserCards(userId: number) {
+      return this.prisma.paymentCard.findMany({
+        where:{
+          user_id: userId,
+          deleted_at: null
+        }
+      })    
     }
 
     update(id: number, updatePaymentCardDto: UpdatePaymentCardDto) {
-      return `This action updates a #${id} paymentCard`;
+      return this.prisma.paymentCard.update({
+        where: {id: id},
+        data: updatePaymentCardDto
+      })
     }
 
     remove(id: number) {
-      return `This action removes a #${id} paymentCard`;
+      return this.prisma.paymentCard.update({
+        where: {id: id},
+        data: {deleted_at: new Date()}
+      })
     }
 }

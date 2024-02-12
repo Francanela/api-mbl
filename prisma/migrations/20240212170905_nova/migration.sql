@@ -37,7 +37,7 @@ CREATE TABLE "address" (
 -- CreateTable
 CREATE TABLE "application" (
     "id" SERIAL NOT NULL,
-    "nome" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -50,7 +50,7 @@ CREATE TABLE "phones" (
     "id" SERIAL NOT NULL,
     "user_id" INTEGER NOT NULL,
     "phone_number" TEXT NOT NULL,
-    "main_phone" BOOLEAN NOT NULL,
+    "main_phone" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMP(3),
@@ -64,14 +64,25 @@ CREATE TABLE "payment_cards" (
     "user_id" INTEGER NOT NULL,
     "plataform_name" TEXT NOT NULL,
     "plataform_id" TEXT NOT NULL,
-    "card_number_prefix" TEXT NOT NULL,
-    "card_number_sufix" TEXT NOT NULL,
+    "card_number_prefix" INTEGER NOT NULL,
+    "card_number_sufix" INTEGER NOT NULL,
     "card_brand" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "payment_cards_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "logs" (
+    "id" SERIAL NOT NULL,
+    "application_id" INTEGER NOT NULL,
+    "operation" TEXT NOT NULL,
+    "entity" TEXT NOT NULL,
+    "data" TEXT NOT NULL,
+
+    CONSTRAINT "logs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

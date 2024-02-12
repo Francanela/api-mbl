@@ -82,3 +82,13 @@ model PaymentCard {
 
   @@map("payment_cards")
 }
+
+model Log {
+  id                     Int      @id @default(autoincrement())
+  application_id         Int 
+  operation              String
+  entity                 String
+  data                   String
+  
+  @@map("logs")
+}

@@ -6,6 +6,6 @@ import { PhonesService } from 'src/phones/phones.service';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, PhonesService, PrismaService]
+  providers: [UsersService, PrismaService]
 })
 export class UsersModule {}

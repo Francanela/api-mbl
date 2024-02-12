@@ -10,7 +10,11 @@ async function bootstrap() {
       .setTitle('MBL users data')
       .setDescription('API description')
       .setVersion('1.0')
-      .addTag('API')
+      .addTag('payment_cards','Basic payment card information related to the user')
+      .addTag('users','User data')
+      .addTag('phones','Phones user data')
+      .addTag('applications','Create a new application token')
+      .addTag('address','Address user data')
       .build();
   
   const document = SwaggerModule.createDocument(app, options);
