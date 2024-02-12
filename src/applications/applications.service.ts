@@ -10,7 +10,7 @@ export class ApplicationsService {
     constructor(private configService: ConfigService, private prisma: PrismaService) { }
 
     private getConfig() {
-        return {
+        return { 
             hashBytes: +this.configService.get('HASH_HASH_BYTES'),
             saltBytes: +this.configService.get('HASH_SALT_BYTES'),
             iterations: +this.configService.get('HASH_ITERATIONS'),
