@@ -11,7 +11,7 @@ export class PaymentCardsController {
 
   @Post()
   create(@Param('userId') userId: number, @Body() createPaymentCardDto: CreatePaymentCardDto) {
-    createPaymentCardDto.user_id = userId;
+    createPaymentCardDto.user_id = Number(userId);
     return this.paymentCardsService.create(createPaymentCardDto);
   }
   
