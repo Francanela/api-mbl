@@ -15,6 +15,6 @@ export class CreateUserDto {
   @Length(8, 12)
   password: string; // Assume password hashing is implemented elsewhere
 
-  @MinDate(new Date(1900, 1, 1)) // Adjust minimum date as needed
+  @MinDate(new Date(1900, 1, 1)) // Adjust minimum date as need
   dataNascimento: Date;
 }
