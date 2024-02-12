@@ -32,11 +32,11 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get(':userId/phones/:phoneId')
+  @Get(':userId/phones/')
   async findUserPhones(
       @Param('userId') userId: string, 
     ) {
-      return this.phoneService.findUserPhones(userId)
+      return this.phoneService.findUserPhones(parseInt(userId))
   }
 
   @Get(':userId/phones/:phoneId')
@@ -44,7 +44,7 @@ export class UsersController {
       @Param('userId') userId: string, 
       @Param('phoneId') phoneId: string, 
     ) {
-      return this.phoneService.findOne(userId, phoneId)
+      return this.phoneService.findOne(parseInt(userId), parseInt(phoneId))
   }
 
   @Post(':userId/phones')
@@ -53,7 +53,7 @@ export class UsersController {
     @Body() createPhoneDto: CreatePhoneDto
   ) {
     console.log(createPhoneDto)
-    return this.phoneService.create(userId, createPhoneDto)
+    return this.phoneService.create(parseInt(userId), createPhoneDto)
   }
 
   @Put(':userId/phones/:phoneId')
@@ -62,7 +62,7 @@ export class UsersController {
     @Param('phoneId') phoneId: string,
     @Body() createPhoneDto: CreatePhoneDto
   ) {
-    return this.phoneService.update(userId, phoneId, createPhoneDto)
+    return this.phoneService.update(parseInt(userId), parseInt(phoneId), createPhoneDto)
   }
 
   @Delete(':userId/phones/:phoneId')
@@ -70,6 +70,6 @@ export class UsersController {
     @Param('userId') userId: string,
     @Param('phoneId') phoneId: string
   ) {
-    return this.phoneService.delete(userId, phoneId)
+    return this.phoneService.delete(parseInt(userId), parseInt(phoneId))
   }
 }

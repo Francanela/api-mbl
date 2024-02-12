@@ -7,7 +7,7 @@ export class PhonesService {
 
   constructor(private prisma: PrismaService) {}
 
-  async findUserPhones(userId: string){
+  async findUserPhones(userId: number){
     return this.prisma.phone.findMany({
       where:{
         user_id: userId,
@@ -16,7 +16,7 @@ export class PhonesService {
     })
   }
 
-  async findOne(userId: string, id: string) {
+  async findOne(userId: number, id: number) {
     return this.prisma.phone.findUnique({
       where: { 
         id: id,
@@ -26,7 +26,7 @@ export class PhonesService {
     });
   }
 
-  async create(userId: string, createPhoneDto: CreatePhoneDto){
+  async create(userId: number, createPhoneDto: CreatePhoneDto){
     return this.prisma.phone.create({data:{
       phone_number: createPhoneDto.phoneNumber,
       main_phone: createPhoneDto.mainPhone,
@@ -34,7 +34,7 @@ export class PhonesService {
     }})
   }
 
-  async update(userId: string, phoneId:string, createPhoneDto: CreatePhoneDto) {
+  async update(userId: number, phoneId: number, createPhoneDto: CreatePhoneDto) {
     const now = new Date
     
     return this.prisma.phone.update({
@@ -49,7 +49,7 @@ export class PhonesService {
       }})
   }
 
-  async delete(userId: string, phoneId:string) {
+  async delete(userId: number, phoneId: number) {
     const now = new Date
     
     return this.prisma.phone.update({

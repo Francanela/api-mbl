@@ -5,8 +5,4 @@ import { PhonesService } from './phones.service';
 export class PhonesController {
   constructor(private readonly phonesService: PhonesService) {}
 
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.phonesService.findOne(id);
-  }
 }
