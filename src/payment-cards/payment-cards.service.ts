@@ -8,8 +8,8 @@ import { PrismaService } from 'src/database/PrismaService';
 export class PaymentCardsService {
     constructor(private prisma: PrismaService) {}
     
-    async create(createPaymentCardDto: CreatePaymentCardDto): Promise<PaymentCard> {
-      return this.prisma.paymentCard.create({data: createPaymentCardDto});
+    async create(createPaymentCardDto: CreatePaymentCardDto): Promise<any> {
+      // return this.prisma.paymentCard.create({data: createPaymentCardDto});
     }
 
     findCard(id: number) {

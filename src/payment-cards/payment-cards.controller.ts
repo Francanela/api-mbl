@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PaymentCardsService } from './payment-cards.service';
 import { CreatePaymentCardDto } from './dto/create-payment-card.dto';
 import { UpdatePaymentCardDto } from './dto/update-payment-card.dto';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('payment_cards')
 @Controller('user/:userId/payment-cards')
 @ApiParam({ name: 'userId', description: 'User ID' }) // Adicione esta anotação para informar ao Swagger sobre o parâmetro de rota
 export class PaymentCardsController {
