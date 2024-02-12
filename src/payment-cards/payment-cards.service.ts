@@ -13,7 +13,7 @@ export class PaymentCardsService {
     }
 
     findCard(id: number) {
-      return this.prisma.phone.findMany({
+      return this.prisma.paymentCard.findUnique({
         where:{
           id: id,
         }
@@ -30,10 +30,16 @@ export class PaymentCardsService {
     }
 
     update(id: number, updatePaymentCardDto: UpdatePaymentCardDto) {
-      return `This action updates a #${id} paymentCard`;
+      return this.prisma.paymentCard.update({
+        where: {id: id},
+        data: updatePaymentCardDto
+      })
     }
 
     remove(id: number) {
-      return `This action removes a #${id} paymentCard`;
+      return this.prisma.paymentCard.update({
+        where: {id: id},
+        data: {deleted_at: new Date()}
+      })
     }
 }
