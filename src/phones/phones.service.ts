@@ -56,11 +56,11 @@ export class PhonesService {
   }
 
   async update(userId: number, phoneId: number, updatePhoneDto: UpdatePhoneDto) {
-    const originalPhone = this.findOne(userId, phoneId)
+    const originalPhone = (await this.findOne(userId, phoneId))    
 
     const now = new Date
 
-    this.logService.log(
+     this.logService.log(
       new CreateLogDto(
         1,
         this.logConst.updateOperation,
@@ -68,7 +68,7 @@ export class PhonesService {
         JSON.stringify(originalPhone)
       )
     )
-
+    
     return this.prisma.phone.update({
       where: {
         id: phoneId,
