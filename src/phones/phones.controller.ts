@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { PhonesService } from './phones.service';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
 import { LogService } from 'src/log/log.service';
 import { CreateLogDto } from 'src/log/dto/create-log.dto';
 
+@ApiTags('phones')
 @Controller('user/:userId/phones/')
 @ApiParam({ name: 'userId', description: 'User ID' })
 export class PhonesController {

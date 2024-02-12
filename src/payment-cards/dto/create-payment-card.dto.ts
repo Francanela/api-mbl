@@ -3,23 +3,22 @@ import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601, IsNumber } f
 
 export class CreatePaymentCardDto {
     
-    @IsNumber()
     user_id: number
 
-    @IsString()
     @ApiProperty()
+    @IsString()
     plataform_name: string
 
-    @IsString()
     @ApiProperty()
+    @IsString()
     plataform_id: string
 
-    @IsNumber()
     @ApiProperty()
+    @IsNumber()
     card_number_prefix: number
 
-    @IsNumber()
     @ApiProperty()
+    @IsNumber()
     card_number_sufix: number
 
     @ApiProperty()
