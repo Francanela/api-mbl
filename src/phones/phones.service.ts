@@ -2,12 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/PrismaService';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
+import { LogService } from 'src/log/log.service';
+import { CreateLogDto } from 'src/log/dto/create-log.dto';
+import { LogConsts } from 'src/commons/const-object.commons';
 
 @Injectable()
 export class PhonesService {
 
   constructor(
-    private prisma: PrismaService
+    private prisma: PrismaService,
+    private readonly logService: LogService,
+    private readonly logConst: LogConsts
   ) { }
 
   async findUserPhones(userId: number) {
@@ -30,18 +35,39 @@ export class PhonesService {
   }
 
   async create(userId: number, createPhoneDto: CreatePhoneDto) {
-    
-    return this.prisma.phone.create({
+    const createdPhone = this.prisma.phone.create({
       data: {
         phone_number: createPhoneDto.phoneNumber,
         main_phone: createPhoneDto.mainPhone,
         user_id: userId
       }
     })
+
+    this.logService.log(
+      new CreateLogDto(
+        1,
+        this.logConst.createOperation,
+        this.logConst.phoneEntity,
+        (await createdPhone).id.toString()
+      )
+    )
+
+    return createPhoneDto
   }
 
   async update(userId: number, phoneId: number, updatePhoneDto: UpdatePhoneDto) {
+    const originalPhone = this.findOne(userId, phoneId)
+
     const now = new Date
+
+    this.logService.log(
+      new CreateLogDto(
+        1,
+        this.logConst.updateOperation,
+        this.logConst.phoneEntity,
+        JSON.stringify(originalPhone)
+      )
+    )
 
     return this.prisma.phone.update({
       where: {
@@ -58,6 +84,15 @@ export class PhonesService {
 
   async delete(userId: number, phoneId: number) {
     const now = new Date
+
+    this.logService.log(
+      new CreateLogDto(
+        1,
+        this.logConst.deleteOperation,
+        this.logConst.phoneEntity,
+        phoneId.toString()
+      )
+    )
 
     return this.prisma.phone.update({
       where: {
