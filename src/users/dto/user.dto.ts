@@ -28,6 +28,5 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsISO8601({strict: true})
-  @MinDate(new Date(1900, 1, 1)) // Ajuste a data mínima conforme necessário
   dataNascimento: Date;
 }
