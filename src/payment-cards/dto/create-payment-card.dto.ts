@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601, IsNumber } from 'class-validator';
 
 export class CreatePaymentCardDto {
-    @ApiProperty()
+    
     @IsNumber()
     user_id: number
 
