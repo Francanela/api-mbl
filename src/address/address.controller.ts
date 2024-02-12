@@ -13,8 +13,8 @@ export class AddressController {
   }
 
   @Get(':id')
-  findById(@Param('id') id: string) {
-    return this.addressService.findById(id);
+  findByUserId(@Param('id') id: string) {
+    return this.addressService.findByUserId(id);
   }
 
   // @Patch(':id')

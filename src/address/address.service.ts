@@ -12,13 +12,13 @@ export class AddressService {
       return this.prisma.address.create({ data });
   }
 
-  findById(id: string) {
+  findByUserId(id: string) {
     return this.prisma.address.findMany({ where:{ user_id: id} }  );
   }
 
-  // update(id: number, updateAddressDto: UpdateAddressDto) {
-  //   return `This action updates a #${id} address`;
-  // }
+  update(id: number, updateAddressDto: UpdateAddressDto) {
+    return `This action updates a #${id} address`;
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} address`;
