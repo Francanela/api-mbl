@@ -17,18 +17,18 @@ export class PaymentCardsController {
     return this.paymentCardsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paymentCardsService.findOne(+id);
+  @Get(':user_id')
+  findOne(@Param('id') userId: number) {
+    return this.paymentCardsService.findByUser(+userId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaymentCardDto: UpdatePaymentCardDto) {
+  update(@Param('id') id: number, @Body() updatePaymentCardDto: UpdatePaymentCardDto) {
     return this.paymentCardsService.update(+id, updatePaymentCardDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.paymentCardsService.remove(+id);
   }
 }

@@ -4,18 +4,18 @@ export class CreateUserDto {
   
   @ApiProperty()
   @IsString()
-  @Length(2, 30)
+  @Length(2, 100)
   name: string;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
-  @Length(2, 30)
+  @Length(2, 100)
   lastName: string;
 
   @ApiProperty()
   @IsEmail()
-  @Length(11, 14)
+  @Length(11, 50)
   cpf: string
 
   @ApiProperty()
@@ -24,7 +24,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsString()
-  @Length(8, 12)
+  @Length(8, 50)
   password: string; // Assuma que o hash de senha está implementado em outro lugar
 
   @ApiProperty()
