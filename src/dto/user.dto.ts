@@ -1,20 +1,34 @@
-import { IsEmail, IsString, Length, MinDate } from 'class-validator';
-
+import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 export class CreateUserDto {
   
+  @ApiProperty()
+  @IsString()
+  @Length(2, 30)
   name: string;
 
+  @ApiProperty()
+  @IsOptional()
   @IsString()
   @Length(2, 30)
   lastName: string;
 
+  @ApiProperty()
   @IsEmail()
-  unique: string; // Replace with desired unique identifier type (email, CPF, etc.)
+  @Length(11, 14)
+  cpf: string
 
+  @ApiProperty()
+  @IsEmail()
+  email: string; // Replace with desired unique identifier type (email, CPF, etc.)
+
+  @ApiProperty()
   @IsString()
   @Length(8, 12)
-  password: string; // Assume password hashing is implemented elsewhere
+  password: string; // Assuma que o hash de senha está implementado em outro lugar
 
-  @MinDate(new Date(1900, 1, 1)) // Adjust minimum date as need
+  @ApiProperty()
+  @IsISO8601({strict: true})
+  @MinDate(new Date(1900, 1, 1)) // Ajuste a data mínima conforme necessário
   dataNascimento: Date;
 }

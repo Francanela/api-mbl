@@ -8,8 +8,9 @@ import { CreateUserDto } from 'src/dto/user.dto';
 export class UsersService {
     constructor(private prisma: PrismaService) {}
 
-    async create(data: CreateUserDto): Promise<User> {        
-        return this.prisma.user.create({ data: data});
+    async create(data: CreateUserDto): Promise<User> {
+        console.log(data);
+        return this.prisma.user.create({data: data});
     }
 
     async findAll() {
