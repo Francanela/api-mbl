@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Delete, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from 'src/users/dto/user.dto';
 import { PhonesService } from 'src/phones/phones.service';
@@ -32,6 +32,21 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Get(':userId/phones/:phoneId')
+  async findUserPhones(
+      @Param('userId') userId: string, 
+    ) {
+      return this.phoneService.findUserPhones(userId)
+  }
+
+  @Get(':userId/phones/:phoneId')
+  async findOneUserPhone(
+      @Param('userId') userId: string, 
+      @Param('phoneId') phoneId: string, 
+    ) {
+      return this.phoneService.findOne(userId, phoneId)
+  }
+
   @Post(':userId/phones')
   async createPhone(
     @Param('userId') userId: string,
@@ -43,10 +58,18 @@ export class UsersController {
 
   @Put(':userId/phones/:phoneId')
   async updateUserPhone(
-      @Param('userId') userId: string, 
-      @Param('phoneId') phoneId: string, 
-      @Body() createPhoneDto: CreatePhoneDto
-    ) {
-      return this.phoneService.update
+    @Param('userId') userId: string,
+    @Param('phoneId') phoneId: string,
+    @Body() createPhoneDto: CreatePhoneDto
+  ) {
+    return this.phoneService.update(userId, phoneId, createPhoneDto)
+  }
+
+  @Delete(':userId/phones/:phoneId')
+  async deleteUserPhone(
+    @Param('userId') userId: string,
+    @Param('phoneId') phoneId: string
+  ) {
+    return this.phoneService.delete(userId, phoneId)
   }
 }

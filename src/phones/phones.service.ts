@@ -7,7 +7,7 @@ export class PhonesService {
 
   constructor(private prisma: PrismaService) {}
 
-  async findUsersPhone(userId: string){
+  async findUserPhones(userId: string){
     return this.prisma.phone.findMany({
       where:{
         user_id: userId,
