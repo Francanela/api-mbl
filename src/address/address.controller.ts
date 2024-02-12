@@ -12,10 +12,10 @@ export class AddressController {
     return this.addressService.create(createAddressDto);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.addressService.findOne(id);
-  // }
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.addressService.findById(id);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {

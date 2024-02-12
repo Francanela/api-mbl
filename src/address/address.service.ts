@@ -12,9 +12,9 @@ export class AddressService {
       return this.prisma.address.create({ data });
   }
 
-  // findOne(id: string) {
-  //   return `This action returns a #${id} address`;
-  // }
+  findById(id: string) {
+    return this.prisma.address.findMany({ where:{ user_id: id} }  );
+  }
 
   // update(id: number, updateAddressDto: UpdateAddressDto) {
   //   return `This action updates a #${id} address`;
