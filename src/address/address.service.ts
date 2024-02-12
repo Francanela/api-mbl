@@ -16,8 +16,8 @@ export class AddressService {
     return this.prisma.address.findMany({ where:{ user_id: id} }  );
   }
 
-  update(id: number, updateAddressDto: UpdateAddressDto) {
-    return `This action updates a #${id} address`;
+  update(id: string, updateAddressDto: UpdateAddressDto) {
+    return this.prisma.address.update({data: updateAddressDto, where: {id: id}});
   }
 
   // remove(id: number) {
