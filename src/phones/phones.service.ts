@@ -7,8 +7,8 @@ export class PhonesService {
   constructor(private prisma: PrismaService) {}
 
   async findOne(id: number) {
-    return this.prisma.phone.findUnique({
-      where: { id },
-    });
+ //   return this.prisma.phone.findUnique({
+ //     where: { id },
+ //   });
   }
 }

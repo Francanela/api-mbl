@@ -15,14 +15,24 @@ export class AddressController {
   @Get(':id')
   findByUserId(@Param('id') id: string) {
     return this.addressService.findByUserId(id);
+
+  @Get()
+  findAll() {
+    return this.addressService.findAll();
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
+
     return this.addressService.update(id, updateAddressDto);
   }
   @Delete(':id')
   delete(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
     return this.addressService.update(id, updateAddressDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.addressService.remove(id);
   }
 }
