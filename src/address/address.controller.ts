@@ -15,9 +15,9 @@ export class AddressController {
     return this.addressService.create(createAddressDto);
   }
 
-  @Get('find/:id')
-  findByUserId(@Param('id') id: number) {
-     return this.addressService.findByUserId(+id);
+  @Get(':userId/find')
+  findByUserId(@Param('userId') userId: number) {
+     return this.addressService.findByUserId(+userId);
   }
 
   @Patch(':id')
