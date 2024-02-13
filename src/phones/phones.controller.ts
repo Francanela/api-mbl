@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
 import { PhonesService } from './phones.service';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
+import { JwtAuthGuard } from 'src/auth/auth.service';
 
 @ApiTags('phones')
 @Controller('user/:userId/phones/')
 @ApiParam({ name: 'userId', description: 'User ID' })
+@UseGuards(JwtAuthGuard)
 export class PhonesController {
   constructor(private readonly phonesService: PhonesService) {}
 
@@ -30,7 +32,6 @@ export class PhonesController {
     @Param('userId') userId: string,
     @Body() createPhoneDto: CreatePhoneDto
   ) {
-    console.log(createPhoneDto)
     return this.phonesService.create(parseInt(userId), createPhoneDto)
   }
 

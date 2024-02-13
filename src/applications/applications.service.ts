@@ -38,4 +38,13 @@ export class ApplicationsService {
         
         return createdApplication;
     }
+
+    async findByToken(token: string) {
+        console.log("passou");
+        return this.prisma.application.findFirst({
+          where:{
+            token: token
+          }
+        })    
+      }
 }
