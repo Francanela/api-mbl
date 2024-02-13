@@ -65,6 +65,10 @@ export class AddressService {
     addressId: number,
     updateAddressDto: UpdateAddressDto
   ) {
+    if(updateAddressDto.main_address) {
+      (await this.isThereAnotherMainAddress(userId))
+    }
+
     const originalAddress = (await this.findOneUserAddress(userId, addressId))
 
     this.logService.log(
