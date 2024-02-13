@@ -133,6 +133,12 @@ export class PhonesService {
   }
 
   async delete(userId: number, phoneId: number) {
+    const originalPhone = (await this.findOne(userId, phoneId))
+
+    if (originalPhone === null) {
+      throw new NotFoundException("You do not own this number!")
+    }
+
     const now = new Date
 
     this.logService.log(
