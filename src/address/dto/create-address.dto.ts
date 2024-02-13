@@ -7,19 +7,16 @@ export class CreateAddressDto {
 
     @ApiProperty()
     @IsString()
-    @IsOptional()
     @Length(2, 100)
     street_address: string;
 
     @ApiProperty()
     @IsString()
-    @IsOptional()
     @Length(1, 10)
     number: string;
 
     @ApiProperty()
     @IsString()
-    @IsOptional()
     @Length(1, 100)
     additional_details: string;
 
@@ -30,12 +27,12 @@ export class CreateAddressDto {
 
     @ApiProperty()
     @IsString()
+    @IsOptional()
     @Length(2, 100)
     city: string;
 
     @ApiProperty()
     @IsString()
-    @IsOptional()
     @Length(2, 100)
     state: string;
 
