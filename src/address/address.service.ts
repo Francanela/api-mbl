@@ -116,7 +116,11 @@ export class AddressService {
   }
 
   async delete(userId: number, addressId: number) {
-    console.log(userId);
+    const originalAddress = (await this.findOneUserAddress(userId, addressId))
+
+    if(originalAddress === null) {
+      throw new NotFoundException("You do not own this address!")
+    }
 
     this.logService.log(
       new CreateLogDto(
