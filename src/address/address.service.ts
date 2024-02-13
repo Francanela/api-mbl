@@ -1,10 +1,11 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { PrismaService } from 'src/database/PrismaService';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { LogService } from 'src/log/log.service';
 import { LogConsts } from 'src/commons/const-object.commons';
 import { CreateLogDto } from 'src/log/dto/create-log.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class AddressService {
@@ -23,26 +24,30 @@ export class AddressService {
       }
     })
 
-    if(mainAddress) {
+    if (mainAddress) {
       throw new ConflictException("Already exist an main address")
     }
   }
 
-  private async chengeMainAddress(userId:number) {
+  private async chengeMainAddress(userId: number) {
     const mainAddress = await this.prisma.address.findFirst({
-      where:{
+      where: {
         user_id: userId,
         main_address: true,
         deleted_at: null
       }
     })
 
-    await this.prisma.address.update({
-      where:{
-        id: mainAddress.id
-      },
-      data: {...mainAddress, main_address: false }
-    })
+    if (mainAddress === null) {
+      return
+    }
+
+      await this.prisma.address.update({
+        where: {
+          id: mainAddress.id
+        },
+        data: { ...mainAddress, main_address: false }
+      })
   }
 
   async create(createAddressDto: CreateAddressDto) {
@@ -83,12 +88,16 @@ export class AddressService {
     addressId: number,
     updateAddressDto: UpdateAddressDto
   ) {
-    if(updateAddressDto.main_address) {
-      (await this.chengeMainAddress(userId))
-    }
-
     const originalAddress = (await this.findOneUserAddress(userId, addressId))
 
+    if(originalAddress === null) {
+      throw new NotFoundException("You do not own this address!")
+    }
+
+    if (updateAddressDto.main_address) {
+      (await this.chengeMainAddress(userId))
+    }
+    
     this.logService.log(
       new CreateLogDto(
         1,

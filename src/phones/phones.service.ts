@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/database/PrismaService';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
@@ -43,16 +43,37 @@ export class PhonesService {
         deleted_at: null
       },
     })
-    
-    if(mainPhone) {
+
+    if (mainPhone) {
       throw new ConflictException("Already exist main phone")
     }
 
   }
 
-  async create(userId: number, createPhoneDto: CreatePhoneDto) {    
-    if(createPhoneDto.mainPhone) {
-      ( await this.isThereAnotherPhoneMain(userId))
+  private async changeMainPhone(userId: number) {
+    const mainPhone = await this.prisma.phone.findFirst({
+      where: {
+        user_id: userId,
+        main_phone: Boolean(true),
+        deleted_at: null
+      },
+    })
+
+    if (mainPhone === null) { return }
+
+    await this.prisma.phone.update({
+      where: {
+        user_id: userId,
+        id: mainPhone.id,
+        deleted_at: null
+      },
+      data: { ...mainPhone, main_phone: false }
+    })
+  }
+
+  async create(userId: number, createPhoneDto: CreatePhoneDto) {
+    if (createPhoneDto.mainPhone) {
+      (await this.isThereAnotherPhoneMain(userId))
     }
 
     const createdPhone = this.prisma.phone.create({
@@ -76,15 +97,19 @@ export class PhonesService {
   }
 
   async update(userId: number, phoneId: number, updatePhoneDto: UpdatePhoneDto) {
-    if(updatePhoneDto.mainPhone) {
-      ( await this.isThereAnotherPhoneMain(userId))
+    const originalPhone = (await this.findOne(userId, phoneId))
+
+    if (originalPhone === null) {
+      throw new NotFoundException("You do not own this number!")
     }
 
-    const originalPhone = (await this.findOne(userId, phoneId))    
+    if (updatePhoneDto.mainPhone) {
+      (await this.changeMainPhone(userId))
+    }
 
     const now = new Date
 
-     this.logService.log(
+    this.logService.log(
       new CreateLogDto(
         1,
         this.logConst.updateOperation,
@@ -92,11 +117,12 @@ export class PhonesService {
         JSON.stringify(originalPhone)
       )
     )
-    
+
     return this.prisma.phone.update({
       where: {
         id: phoneId,
-        user_id: userId
+        user_id: userId,
+        deleted_at: null
       },
       data: {
         phone_number: updatePhoneDto.phoneNumber,
