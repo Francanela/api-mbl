@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PhonesService } from './phones.service';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
+import { JwtAuthGuard } from 'src/auth/auth.service';
 import { LogService } from 'src/log/log.service';
 import { CreateLogDto } from 'src/log/dto/create-log.dto';
 import { CustomInterceptors } from 'src/custom.interceptors';
@@ -11,6 +12,8 @@ import { CustomInterceptors } from 'src/custom.interceptors';
 @Controller('user/:userId/phones/')
 @UseInterceptors(CustomInterceptors)
 @ApiParam({ name: 'userId', description: 'User ID' })
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class PhonesController {
   constructor(private readonly phonesService: PhonesService) { }
 

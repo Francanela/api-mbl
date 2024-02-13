@@ -55,4 +55,12 @@ export class ApplicationsService {
 
         return createdApplication;
     }
+
+    async findByToken(token: string) {
+        return this.prisma.application.findFirst({
+          where:{
+            token: token.replaceAll('Bearer ', ''),
+          }
+        })    
+      }
 }

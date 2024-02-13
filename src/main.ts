@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder  } from '@nestjs/swagger';
+import { Header, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +15,7 @@ async function bootstrap() {
       .addTag('phones','Phones user data')
       .addTag('applications','Create a new application token')
       .addTag('address','Address user data')
+      .addBearerAuth()
       .build();
   
   const document = SwaggerModule.createDocument(app, options);
