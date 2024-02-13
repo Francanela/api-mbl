@@ -15,6 +15,7 @@ async function bootstrap() {
       .addTag('phones','Phones user data')
       .addTag('applications','Create a new application token')
       .addTag('address','Address user data')
+      .
       .build();
   
   const document = SwaggerModule.createDocument(app, options);
