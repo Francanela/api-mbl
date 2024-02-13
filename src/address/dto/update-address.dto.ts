@@ -1,11 +1,7 @@
-import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601, IsNumber } from 'class-validator';
+import { IsEmail, IsString, IsOptional, Length, MinDate, IsISO8601, IsNumber, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateAddressDto {
-
-    @ApiProperty()
-    id: number;
-
     @ApiProperty()
     @IsString()
     @IsOptional()
@@ -62,5 +58,6 @@ export class UpdateAddressDto {
 
     @ApiProperty()
     @IsOptional()
+    @IsBoolean()
     main_address: boolean;
 }

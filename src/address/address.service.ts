@@ -28,6 +28,23 @@ export class AddressService {
     }
   }
 
+  private async chengeMainAddress(userId:number) {
+    const mainAddress = await this.prisma.address.findFirst({
+      where:{
+        user_id: userId,
+        main_address: true,
+        deleted_at: null
+      }
+    })
+
+    await this.prisma.address.update({
+      where:{
+        id: mainAddress.id
+      },
+      data: {...mainAddress, main_address: false }
+    })
+  }
+
   async create(createAddressDto: CreateAddressDto) {
     if (createAddressDto.main_address === true) {
       (await this.isThereAnotherMainAddress(createAddressDto.user_id))
@@ -51,7 +68,8 @@ export class AddressService {
     return this.prisma.address.findUnique({
       where: {
         user_id: userId,
-        id: addressId
+        id: addressId,
+        deleted_at: null
       }
     })
   }
@@ -66,7 +84,7 @@ export class AddressService {
     updateAddressDto: UpdateAddressDto
   ) {
     if(updateAddressDto.main_address) {
-      (await this.isThereAnotherMainAddress(userId))
+      (await this.chengeMainAddress(userId))
     }
 
     const originalAddress = (await this.findOneUserAddress(userId, addressId))
