@@ -8,10 +8,7 @@ import { PhonesModule } from './phones/phones.module';
 import { AddressModule } from './address/address.module';
 import { PaymentCardsModule } from './payment-cards/payment-cards.module';
 import { PassportModule } from '@nestjs/passport';
-import { JwtAuthGuard } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
-import { ApplicationsService } from './applications/applications.service';
-import { PrismaService } from './database/PrismaService';
 
 
 @Module({
@@ -28,7 +25,7 @@ import { PrismaService } from './database/PrismaService';
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, JwtAuthGuard],
+  providers: [AppService],
 })
 
 export class AppModule { }

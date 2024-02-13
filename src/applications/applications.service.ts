@@ -40,10 +40,9 @@ export class ApplicationsService {
     }
 
     async findByToken(token: string) {
-        console.log("passou");
         return this.prisma.application.findFirst({
           where:{
-            token: token
+            token: token.replaceAll('Bearer ', ''),
           }
         })    
       }
