@@ -15,10 +15,7 @@ async function bootstrap() {
       .addTag('phones','Phones user data')
       .addTag('applications','Create a new application token')
       .addTag('address','Address user data')
-      .addBearerAuth(
-        { type: 'apiKey', scheme: 'bearer', bearerFormat: 'JWT' }, // Add this line to include bearer token
-        'access-token', // This name will be used in the UI
-      )
+      .addBearerAuth()
       .build();
   
   const document = SwaggerModule.createDocument(app, options);

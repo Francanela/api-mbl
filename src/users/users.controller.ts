@@ -10,6 +10,7 @@ import { JwtAuthGuard } from 'src/auth/auth.service';
 @Controller('users')
 @UseInterceptors(CustomInterceptors)
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class UsersController {
   constructor(
     private readonly usersService: UsersService
