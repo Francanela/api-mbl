@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/PrismaService';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
 import { LogService } from 'src/log/log.service';
 import { CreateLogDto } from 'src/log/dto/create-log.dto';
 import { LogConsts } from 'src/commons/const-object.commons';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class PhonesService {
@@ -34,7 +35,32 @@ export class PhonesService {
     });
   }
 
+  private async isThereAnotherPhoneMain(userId: number, createPhoneDto: CreatePhoneDto) {
+    const mainPhone = await this.prisma.phone.findFirst({
+      where: {
+        user_id: userId,
+        main_phone: Boolean(true)
+      },
+    })
+
+    console.log(mainPhone);
+    
+    if(mainPhone) {
+      // return throwError(() => new BadRequestException("Already exist main phone"))
+      throw new ConflictException("Already exist main phone")
+    }
+
+  }
+
   async create(userId: number, createPhoneDto: CreatePhoneDto) {
+    console.log(createPhoneDto);
+    
+    if(createPhoneDto.mainPhone === true) {
+      console.log("if");
+      
+      ( await this.isThereAnotherPhoneMain(userId, createPhoneDto))
+    }
+
     const createdPhone = this.prisma.phone.create({
       data: {
         phone_number: createPhoneDto.phoneNumber,
@@ -104,5 +130,4 @@ export class PhonesService {
       }
     })
   }
-
 }
