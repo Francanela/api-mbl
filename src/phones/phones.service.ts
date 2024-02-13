@@ -93,7 +93,7 @@ export class PhonesService {
       )
     )
 
-    return createPhoneDto
+    return createdPhone
   }
 
   async update(userId: number, phoneId: number, updatePhoneDto: UpdatePhoneDto) {
