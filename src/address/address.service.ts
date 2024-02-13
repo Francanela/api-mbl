@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { PrismaService } from 'src/database/PrismaService';
 import { UpdateAddressDto } from './dto/update-address.dto';
@@ -14,7 +14,25 @@ export class AddressService {
     private readonly logConst: LogConsts
   ) { }
 
+  private async isThereAnotherMainAddress(userId: number) {
+    const mainAddress = await this.prisma.address.findFirst({
+      where: {
+        user_id: userId,
+        main_address: true,
+        deleted_at: null
+      }
+    })
+
+    if(mainAddress) {
+      throw new ConflictException("Already exist an main address")
+    }
+  }
+
   async create(createAddressDto: CreateAddressDto) {
+    if (createAddressDto.main_address === true) {
+      (await this.isThereAnotherMainAddress(createAddressDto.user_id))
+    }
+
     const createdAddress = this.prisma.address.create({ data: createAddressDto })
 
     this.logService.log(
@@ -67,8 +85,8 @@ export class AddressService {
   }
 
   async delete(userId: number, addressId: number) {
-   console.log(userId);
-   
+    console.log(userId);
+
     this.logService.log(
       new CreateLogDto(
         1,

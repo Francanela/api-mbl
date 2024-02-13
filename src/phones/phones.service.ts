@@ -39,25 +39,19 @@ export class PhonesService {
     const mainPhone = await this.prisma.phone.findFirst({
       where: {
         user_id: userId,
-        main_phone: Boolean(true)
+        main_phone: Boolean(true),
+        deleted_at: null
       },
     })
-
-    console.log(mainPhone);
     
     if(mainPhone) {
-      // return throwError(() => new BadRequestException("Already exist main phone"))
       throw new ConflictException("Already exist main phone")
     }
 
   }
 
-  async create(userId: number, createPhoneDto: CreatePhoneDto) {
-    console.log(createPhoneDto);
-    
+  async create(userId: number, createPhoneDto: CreatePhoneDto) {    
     if(createPhoneDto.mainPhone === true) {
-      console.log("if");
-      
       ( await this.isThereAnotherPhoneMain(userId, createPhoneDto))
     }
 
