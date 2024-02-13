@@ -6,4 +6,5 @@ export class LogConsts {
     readonly phoneEntity = "PHONE"
     readonly paymentCardEntity = "PAYMENT_CARD"
     readonly addressEntity = "ADDRESS"
+    readonly applicationEntity = "APPLICATION"
 }
