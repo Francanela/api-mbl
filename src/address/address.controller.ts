@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseInterceptors, UseGuards } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { CustomInterceptors } from 'src/custom.interceptors';
+import { JwtAuthGuard } from 'src/auth/auth.service';
 
 @ApiTags('address')
 @Controller('user/:userId/address/')
 @ApiParam({ name: 'userId', description: 'User Id' })
 @UseInterceptors(CustomInterceptors)
+@UseGuards(JwtAuthGuard)
 export class AddressController {
   constructor(private readonly addressService: AddressService) { }
 
