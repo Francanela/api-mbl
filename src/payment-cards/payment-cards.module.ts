@@ -9,6 +9,6 @@ import { ApplicationsService } from 'src/applications/applications.service';
 
 @Module({
   controllers: [PaymentCardsController],
-  providers: [PaymentCardsService, UsersService,  PrismaService, LogService, LogConsts],
+  providers: [ApplicationsService,PaymentCardsService, UsersService,  PrismaService, LogService, LogConsts],
 })
 export class PaymentCardsModule {}

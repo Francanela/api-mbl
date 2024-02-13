@@ -2,25 +2,59 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# API-MBL
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Api para obtenção de dados para cadastro unico do MBL. 
+
+### Swagger: http://localhost:3000/api/
+
+### Redoc: http://localhost:3000/
+
+### Coleção do Postman: docs/postman_collection.json
+
+## Configuração de Ambiente
+
+### Rodando projeto local
+
+1. INSTALANDO O POSTGRES:
+  - Install Postgres
+2. INSTALANDO O NODE:
+  - Install Node.js v 20.11.0 ou superior
+  - Install npm   v 10.4.0
+	-  Caso tenha problemas verificar as vaiaveis de ambiente.
+
+3. INSTALANDO O NEST:
+  OBS: Acesse a pasta pelo cmd(Administrador) rode o comando a seguir:
+	- npm i -g @nestjs/cli
+	- npm install
+ Caso tenha duvidas consulte a documentação: `https://docs.nestjs.com/first-steps`
+4. CONFIGURAR o .env na pasta da aplicação.
+	- npx prisma migrate dev --name
+	- npm run start:dev
+
+## Teste pelo (Postman)
+1. Ao importa arquivo, será necessario configurar a URL para que os Endpoints seja acessados corretamente.
+- Abre postman
+- Importar arquivo da colletion `MBL users data.postman_collection`
+- Acesar (...) View more actions da collections `MBL users data`.
+- Acessar Edit ir na aba Variables e remover as `/` de ambos os campos `Initial Value` e `Current Valeu`.
+- Inserir em Current Valeu `http://localhost:3000`.
+## Logging
+
+O logging foi configurado usando para salvar no banco de dados facilitando na extração e informações e sustentação. Em ambos os ambientes `HML` e `PRD`. Certifique-se de configurar corretamente suas variáveis de ambiente para permitir a integração do banco com a API.
+
+## Dependências
+
+A aplicação utiliza várias bibliotecas e ferramentas, incluindo:
+
+- **Nestjs**: Framework web utilizado para criar a API.
+- **Prisma**: ORM (Object-Relational Mapping) para interação com o banco de dados.
+
+---
+
+Se você tiver dúvidas ou precisar de ajuda com a configuração, entre em contato com a equipe de desenvolvimento.
+
+
 
 ## Description
 
