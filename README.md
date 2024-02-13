@@ -4,7 +4,7 @@
 
 # API-MBL
 
-Api para obtenção de dados para cadastro unico do MBL. 
+API para obtenção de dados para cadastro unico do MBL. 
 
 ### Swagger: http://localhost:3000/api/
 
@@ -28,17 +28,21 @@ Api para obtenção de dados para cadastro unico do MBL.
 	- npm i -g @nestjs/cli
 	- npm install
  Caso tenha duvidas consulte a documentação: `https://docs.nestjs.com/first-steps`
-4. CONFIGURAR o .env na pasta da aplicação.
+4. ENV:
+  - Dentro da pasta do projeto renomeio o arquivo `.env.sample` para `.env`
+6. CONFIGURAR o .env na pasta da aplicação.
 	- npx prisma migrate dev --name
 	- npm run start:dev
 
-## Teste pelo (Postman)
+## Teste utilizando (Postman)
+
 1. Ao importa arquivo, será necessario configurar a URL para que os Endpoints seja acessados corretamente.
-- Abre postman
-- Importar arquivo da colletion `MBL users data.postman_collection`
-- Acesar (...) View more actions da collections `MBL users data`.
-- Acessar Edit ir na aba Variables e remover as `/` de ambos os campos `Initial Value` e `Current Valeu`.
-- Inserir em Current Valeu `http://localhost:3000`.
+  - Abre postman
+  - Importar arquivo da colletion `MBL users data.postman_collection`
+  - Acessar (...) View more actions da collections `MBL users data`.
+  - Acessar Edit ir na aba Variables e remover as `/` de ambos os campos `Initial Value` e `Current Valeu`.
+  - Inserir em Current Valeu `http://localhost:3000`.
+ 
 ## Logging
 
 O logging foi configurado usando para salvar no banco de dados facilitando na extração e informações e sustentação. Em ambos os ambientes `HML` e `PRD`. Certifique-se de configurar corretamente suas variáveis de ambiente para permitir a integração do banco com a API.
@@ -53,7 +57,6 @@ A aplicação utiliza várias bibliotecas e ferramentas, incluindo:
 ---
 
 Se você tiver dúvidas ou precisar de ajuda com a configuração, entre em contato com a equipe de desenvolvimento.
-
 
 
 ## Description
