@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseInterceptors } from '@nestjs/common';
 import { PhonesService } from './phones.service';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
 import { LogService } from 'src/log/log.service';
 import { CreateLogDto } from 'src/log/dto/create-log.dto';
+import { CustomInterceptors } from 'src/custom.interceptors';
 
 @ApiTags('phones')
 @Controller('user/:userId/phones/')
+@UseInterceptors(CustomInterceptors)
 @ApiParam({ name: 'userId', description: 'User ID' })
 export class PhonesController {
   constructor(private readonly phonesService: PhonesService) { }
