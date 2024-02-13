@@ -4,9 +4,10 @@ import { PaymentCardsController } from './payment-cards.controller';
 import { PrismaService } from 'src/database/PrismaService';
 import { LogService } from 'src/log/log.service';
 import { LogConsts } from 'src/commons/const-object.commons';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   controllers: [PaymentCardsController],
-  providers: [PaymentCardsService, PrismaService, LogService, LogConsts],
+  providers: [PaymentCardsService, PrismaService, LogService, LogConsts, UsersService],
 })
 export class PaymentCardsModule {}
