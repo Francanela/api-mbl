@@ -4,13 +4,21 @@ import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/database/PrismaService';
 import * as crypto from "crypto";
 import { CreateApplicationsDto } from './dto/create-applications.dto';
+import { LogConsts } from 'src/commons/const-object.commons';
+import { LogService } from 'src/log/log.service';
+import { CreateLogDto } from 'src/log/dto/create-log.dto';
 
 @Injectable()
 export class ApplicationsService {
-    constructor(private configService: ConfigService, private prisma: PrismaService) { }
+    constructor(
+        private configService: ConfigService,
+        private prisma: PrismaService,
+        private readonly logService: LogService,
+        private readonly logConst: LogConsts
+    ) { }
 
     private getConfig() {
-        return { 
+        return {
             hashBytes: +this.configService.get('HASH_HASH_BYTES'),
             saltBytes: +this.configService.get('HASH_SALT_BYTES'),
             iterations: +this.configService.get('HASH_ITERATIONS'),
@@ -35,7 +43,16 @@ export class ApplicationsService {
                 token: token,
             }
         });
-        
+
+        this.logService.log(
+            new CreateLogDto(
+                1,
+                this.logConst.createOperation,
+                this.logConst.applicationEntity,
+                createdApplication.id.toString()
+            )
+        )
+
         return createdApplication;
     }
 

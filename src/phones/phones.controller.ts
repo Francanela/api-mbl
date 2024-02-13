@@ -1,30 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PhonesService } from './phones.service';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 import { UpdatePhoneDto } from './dto/update-phone.dto';
 import { JwtAuthGuard } from 'src/auth/auth.service';
+import { LogService } from 'src/log/log.service';
+import { CreateLogDto } from 'src/log/dto/create-log.dto';
+import { CustomInterceptors } from 'src/custom.interceptors';
 
 @ApiTags('phones')
 @Controller('user/:userId/phones/')
+@UseInterceptors(CustomInterceptors)
 @ApiParam({ name: 'userId', description: 'User ID' })
 @UseGuards(JwtAuthGuard)
 export class PhonesController {
-  constructor(private readonly phonesService: PhonesService) {}
+  constructor(private readonly phonesService: PhonesService) { }
 
   @Get()
   async findUserPhones(
-      @Param('userId') userId: string, 
-    ) {
-      return this.phonesService.findUserPhones(parseInt(userId))
+    @Param('userId') userId: string,
+  ) {
+    return this.phonesService.findUserPhones(parseInt(userId))
   }
 
   @Get(':phoneId')
   async findOneUserPhone(
-      @Param('userId') userId: string, 
-      @Param('phoneId') phoneId: string, 
-    ) {
-      return this.phonesService.findOne(parseInt(userId), parseInt(phoneId))
+    @Param('userId') userId: string,
+    @Param('phoneId') phoneId: string,
+  ) {
+    return this.phonesService.findOne(parseInt(userId), parseInt(phoneId))
   }
 
   @Post()

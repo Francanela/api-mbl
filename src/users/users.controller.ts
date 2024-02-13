@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CustomInterceptors } from 'src/custom.interceptors';
 
 @ApiTags('users')
 @Controller('users')
+@UseInterceptors(CustomInterceptors)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService
@@ -28,7 +30,6 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return this.usersService.create(createUserDto);
   }
 }

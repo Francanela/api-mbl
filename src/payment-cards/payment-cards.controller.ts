@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { PaymentCardsService } from './payment-cards.service';
 import { CreatePaymentCardDto } from './dto/create-payment-card.dto';
 import { UpdatePaymentCardDto } from './dto/update-payment-card.dto';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { CustomInterceptors } from 'src/custom.interceptors';
 
 @ApiTags('payment_cards')
 @Controller('user/:userId/payment-cards')
 @ApiParam({ name: 'userId', description: 'User ID' }) // Adicione esta anotação para informar ao Swagger sobre o parâmetro de rota
+@UseInterceptors(CustomInterceptors)
 export class PaymentCardsController {
   constructor(private readonly paymentCardsService: PaymentCardsService) {}
 
@@ -18,7 +20,7 @@ export class PaymentCardsController {
   
   @Get()
   findAll(@Param('userId') userId: number) {
-    return this.paymentCardsService.findUserCards(userId);
+    return this.paymentCardsService.findUserCards(+userId);
   }
 
   @Get(':id')
