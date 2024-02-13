@@ -35,7 +35,7 @@ export class PhonesService {
     });
   }
 
-  private async isThereAnotherPhoneMain(userId: number, createPhoneDto: CreatePhoneDto) {
+  private async isThereAnotherPhoneMain(userId: number) {
     const mainPhone = await this.prisma.phone.findFirst({
       where: {
         user_id: userId,
@@ -51,8 +51,8 @@ export class PhonesService {
   }
 
   async create(userId: number, createPhoneDto: CreatePhoneDto) {    
-    if(createPhoneDto.mainPhone === true) {
-      ( await this.isThereAnotherPhoneMain(userId, createPhoneDto))
+    if(createPhoneDto.mainPhone) {
+      ( await this.isThereAnotherPhoneMain(userId))
     }
 
     const createdPhone = this.prisma.phone.create({
@@ -76,6 +76,10 @@ export class PhonesService {
   }
 
   async update(userId: number, phoneId: number, updatePhoneDto: UpdatePhoneDto) {
+    if(updatePhoneDto.mainPhone) {
+      ( await this.isThereAnotherPhoneMain(userId))
+    }
+
     const originalPhone = (await this.findOne(userId, phoneId))    
 
     const now = new Date
