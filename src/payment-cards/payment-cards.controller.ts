@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Use
 import { PaymentCardsService } from './payment-cards.service';
 import { CreatePaymentCardDto } from './dto/create-payment-card.dto';
 import { UpdatePaymentCardDto } from './dto/update-payment-card.dto';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CustomInterceptors } from 'src/custom.interceptors';
 import { JwtAuthGuard } from 'src/auth/auth.service';
 
@@ -11,6 +11,7 @@ import { JwtAuthGuard } from 'src/auth/auth.service';
 @ApiParam({ name: 'userId', description: 'User ID' }) // Adicione esta anotação para informar ao Swagger sobre o parâmetro de rota
 @UseInterceptors(CustomInterceptors)
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class PaymentCardsController {
   constructor(private readonly paymentCardsService: PaymentCardsService) {}
 

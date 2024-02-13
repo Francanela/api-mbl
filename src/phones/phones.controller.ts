@@ -13,6 +13,7 @@ import { CustomInterceptors } from 'src/custom.interceptors';
 @UseInterceptors(CustomInterceptors)
 @ApiParam({ name: 'userId', description: 'User ID' })
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class PhonesController {
   constructor(private readonly phonesService: PhonesService) { }
 
